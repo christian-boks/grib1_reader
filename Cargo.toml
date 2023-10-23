@@ -1,0 +1,18 @@
+[package]
+name = "grib1_reader"
+version = "0.1.0"
+edition = "2021"
+description = "A simple reader capable of reading GRIB version 1 files"
+license = "MIT OR Apache-2.0"
+keywords = ["GRIB", "data format"]
+
+
+[dependencies]
+thiserror = "1.0.24"
+bitstream-io = "1.7.0"
+tokio = { version = "1.33.0", features = [
+    "macros",
+    "fs",
+    "test-util",
+    "io-util",
+] }
