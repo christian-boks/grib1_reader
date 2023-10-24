@@ -2,9 +2,11 @@
 name = "grib1_reader"
 version = "0.1.0"
 edition = "2021"
-description = "A simple reader capable of reading GRIB version 1 files"
+description = "A simple library capable of reading GRIB version 1 files"
 license = "MIT OR Apache-2.0"
 keywords = ["GRIB", "data format"]
+homepage = "https://github.com/christian-boks/grib1_reader"
+repository = "https://github.com/christian-boks/grib1_reader"
 
 
 [dependencies]

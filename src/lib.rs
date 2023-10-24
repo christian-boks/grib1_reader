@@ -1,3 +1,6 @@
+//! Read a GRIB1 file and search for data based on parameter and level values, and decode the data. Or extract the complete subfile so it can be saved to a separate file.
+//! Currently only the Code10 (RotatedLatLon) data type is supported.
+
 use bitstream_io::{BigEndian, BitRead, BitReader};
 use error::Grib1Error;
 use std::io::Cursor;
@@ -7,11 +10,13 @@ use tokio::io::{AsyncReadExt, AsyncSeekExt, BufReader};
 
 pub mod error;
 
+/// Reader of grib version 1 files
 pub struct Grib1Reader {
     pub reader: BufReader<File>,
 }
 
 #[derive(Debug)]
+/// Grib file representation
 pub struct Grib {
     pub length: u64,
     pub pds: PDS,
@@ -32,18 +37,20 @@ pub struct RotatedLatLon {
 }
 
 #[derive(Debug, Clone, Copy)]
+/// List of data types the library supports (is able to decode)
 pub enum DataRepresentation {
     Unhandled,
     RotatedLatLon(RotatedLatLon),
 }
 
 #[derive(Debug)]
-pub enum GribResult {
+enum GribResult {
     Length(u64),
     Grib(Grib),
 }
 
 #[derive(Debug, Clone)]
+/// Grid description section
 pub struct GDS {
     pub number_of_vertical_coordinate_values: u8,
     pub pvl_location: u8,
@@ -52,6 +59,7 @@ pub struct GDS {
 }
 
 #[derive(Debug, Clone)]
+/// Product definition section
 pub struct PDS {
     pub parameter_table_version_number: u8,
     pub identification_of_center: u8,
@@ -87,12 +95,14 @@ impl PDS {
 }
 
 #[derive(Debug)]
+///Bit-map section
 pub struct Bitmap {
     pub number_of_unused_bits_at_end_of_section3: u8,
     pub table_reference: u16,
 }
 
 #[derive(Debug, Clone)]
+/// Binary data section
 pub struct BDS {
     pub data_flag: u8,
     pub binary_scale_factor: i16,
@@ -108,10 +118,12 @@ pub struct SearchParams {
 }
 
 impl Grib1Reader {
+    /// Create a new instance of the GRIB1 reader by specifying the BufReader wrapping the file to read
     pub fn new(buf_reader: BufReader<File>) -> Grib1Reader {
         Grib1Reader { reader: buf_reader }
     }
 
+    /// Read the file looking for data matching the specified search parameters and returning the decoded result
     pub async fn read(&mut self, search: Vec<SearchParams>) -> Result<Vec<Grib>, Grib1Error> {
         let mut offset = 0;
         let mut result = vec![];
@@ -139,6 +151,7 @@ impl Grib1Reader {
         Ok(result)
     }
 
+    /// Read the file looking for data matching the specified search parameters and returning the binary blob representing the file
     pub async fn read_binary(&mut self, search: Vec<SearchParams>) -> Result<Vec<u8>, Grib1Error> {
         let mut offset = 0;
         let mut result = vec![];

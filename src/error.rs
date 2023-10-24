@@ -12,6 +12,6 @@ pub enum Grib1Error {
     #[error("Wrong Grib version. Only version 1 is supported")]
     WrongVersion(u8),
 
-    #[error("Tried to decode more that than we have")]
+    #[error("Tried to decode more data than we have")]
     DataDecodeFailed,
 }
