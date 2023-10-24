@@ -1,5 +1,5 @@
-//! Read a GRIB1 file and search for data based on parameter and level values, and decode the data. Or extract the complete subfile so it can be saved to a separate file.
-//! Currently only the Code10 (RotatedLatLon) data type is supported.
+//! Read a GRIB1 file and search for data based on parameter and level values. The results can either be decoded or extracted as a binary blob so it can be saved to a separate file.
+//! Currently only the Grid 10 (RotatedLatLon) data representation type is supported.
 
 use bitstream_io::{BigEndian, BitRead, BitReader};
 use error::Grib1Error;
@@ -10,7 +10,7 @@ use tokio::io::{AsyncReadExt, AsyncSeekExt, BufReader};
 
 pub mod error;
 
-/// Reader of grib version 1 files
+/// The star of the show
 pub struct Grib1Reader {
     pub reader: BufReader<File>,
 }
@@ -25,6 +25,7 @@ pub struct Grib {
 }
 
 #[derive(Debug, Clone, Copy)]
+/// Rotated latitude/longitude
 pub struct RotatedLatLon {
     pub number_of_lat_values: u16,
     pub number_of_lon_values: u16,
@@ -112,6 +113,7 @@ pub struct BDS {
 }
 
 #[derive(Debug)]
+/// Search parameters for when reading the file
 pub struct SearchParams {
     pub param: u32,
     pub level: u32,

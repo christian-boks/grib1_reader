@@ -1,8 +1,8 @@
 # GRIB1 Reader
 
-Read a GRIB1 file and search for data based on parameter and level values, and decode the data. Or extract the complete subfile so it can be saved to a separate file.
+Read a GRIB1 file and search for data based on parameter and level values. The results can either be decoded or extracted as a binary blob so it can be saved to a separate file.
 
-Currently only the Code10 (RotatedLatLon) data type is supported.
+Currently only the Grid 10 (RotatedLatLon) data representation type is supported
 
 # Usage
 Add this to your Cargo.toml:
