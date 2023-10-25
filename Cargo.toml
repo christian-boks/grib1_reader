@@ -7,7 +7,7 @@ license = "MIT OR Apache-2.0"
 keywords = ["GRIB", "data format"]
 homepage = "https://github.com/christian-boks/grib1_reader"
 repository = "https://github.com/christian-boks/grib1_reader"
-
+exclude = ["data/*", ".vscode/*"]
 
 [dependencies]
 thiserror = "1.0.24"

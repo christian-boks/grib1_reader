@@ -7,18 +7,18 @@ Currently only the Grid 10 (RotatedLatLon) data representation type is supported
 # Usage
 Add this to your Cargo.toml:
 
-```
+```toml
 [dependencies]
 grib1_reader = "0.1.0"
 ```
 and this to your source code:
 
-```
+```rust
 use grib1_reader::{Grib1Reader, SearchParams};
 ```
 # Example
 
-```
+```rust
 let file = File::open("data/sample.grib").await?;
 let mut reader = Grib1Reader::new(BufReader::new(file));
 let result = reader.read(vec![SearchParams { param: 33, level: 700 }]).await?;

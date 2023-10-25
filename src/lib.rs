@@ -120,12 +120,12 @@ pub struct SearchParams {
 }
 
 impl Grib1Reader {
-    /// Create a new instance of the GRIB1 reader by specifying the BufReader wrapping the file to read
+    /// Create a new instance of the GRIB1 reader by specifying the BufReader wrapping the file to read.
     pub fn new(buf_reader: BufReader<File>) -> Grib1Reader {
         Grib1Reader { reader: buf_reader }
     }
 
-    /// Read the file looking for data matching the specified search parameters and returning the decoded result
+    /// Read the file looking for data matching the specified search parameters and return the decoded result.
     pub async fn read(&mut self, search: Vec<SearchParams>) -> Result<Vec<Grib>, Grib1Error> {
         let mut offset = 0;
         let mut result = vec![];
@@ -153,7 +153,7 @@ impl Grib1Reader {
         Ok(result)
     }
 
-    /// Read the file looking for data matching the specified search parameters and returning the binary blob representing the file
+    /// Read the file looking for data matching the specified search parameters and return the binary blob representing the file.
     pub async fn read_binary(&mut self, search: Vec<SearchParams>) -> Result<Vec<u8>, Grib1Error> {
         let mut offset = 0;
         let mut result = vec![];
